@@ -23,6 +23,7 @@ st.markdown('----')
 qc = None
 
 if dna_seq:
+    dna_seq = dna_seq.upper()
     if is_valid_dna_seq(dna_seq):
         if encoding_type == 0:
             qc = amplitude_encoding(dna_seq.upper())
