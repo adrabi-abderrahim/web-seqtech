@@ -6,6 +6,22 @@ from qiskit.visualization import *
 from qiskit.providers.aer import QasmSimulator
 from qiskit.visualization import plot_bloch_multivector, plot_state_hinton, plot_state_city, plot_state_paulivec
 
+def is_valid_dna_seq(seq):
+    """
+    Checks if a given sequence is a valid DNA sequence.
+
+    Args:
+        seq (str): The sequence to be validated.
+
+    Returns:
+        bool: True if the sequence is a valid DNA sequence, False otherwise.
+
+    """
+    valid_letters = {'A', 'T', 'C', 'G'}
+    if any(letter not in valid_letters for letter in seq):
+        return False
+    return True
+        
 def amplitude_encoding(dna_seq):
     """
     Encodes a DNA sequence into a quantum state using amplitude encoding.
@@ -15,9 +31,11 @@ def amplitude_encoding(dna_seq):
 
     Returns:
         QuantumCircuit: The quantum circuit representing the amplitude encoding.
-
     """
     # Function implementation here
+    if not is_valid_dna_seq(dna_seq):
+        print("Error: This is not a DNA sequence. Please try again with a valid DNA sequence.")
+        return None
     dna_dict = {'A': '00', 'C': '01', 'G': '10', 'T': '11'}
     binary_str = ''.join([dna_dict[base] for base in dna_seq])
 
@@ -43,7 +61,10 @@ def cosine_encoding(dna_seq):
 
     Returns:
         QuantumCircuit: The quantum circuit representing the cosine encoding.
-       """
+    """
+    if not is_valid_dna_seq(dna_seq):
+        print("Error: This is not a DNA sequence. Please try again with a valid DNA sequence.")
+        return None
     # Define the basis states |0⟩ and |1⟩
     zero = np.array([1, 0])
     one = np.array([0, 1])
@@ -73,6 +94,17 @@ def cosine_encoding(dna_seq):
 
     return qc
 
+def draw_circuit(qc):
+    """
+    Draws a quantum circuit.
+
+    Args:
+        qc (QuantumCircuit): The quantum circuit to be drawn.
+
+    # Function implementation here
+    """
+    return qc.draw(output='mpl')
+    
 def get_statevector(qc):
     """
     Executes a quantum circuit on a simulator and returns the resulting statevector.

@@ -5,6 +5,8 @@ from quantum_dna_encoding import *
 
 
 st.title('Classical-to-Quantum App Sequence Encoding App: NZ-SeQTech')
+st.markdown('Zaiku Group Ltd. / Quantum Formalism')
+st.markdown("7th Floor, 4 St Paul's Square, Liverpool L3 9SJ, United Kingdom")
 
 st.markdown('----')
 st.write('This is an early prototype to have a general overview of the most **important** features the final product.')
@@ -16,13 +18,18 @@ encoding_type = st.selectbox('Select the encoding', options=range(len(encoding_o
 visualizations_options = ('Bloch Multivector', 'State Hinton', 'State City', 'State Paulivec')
 visualizations_type = st.selectbox('Select the visualization type', options=range(len(visualizations_options)), format_func=lambda x: visualizations_options[x])
 
+st.markdown('----')
+
 qc = None
 
 if dna_seq:
-    if encoding_type == 0:
-        qc = amplitude_encoding(dna_seq.upper())
-    elif encoding_type == 1:
-        qc = cosine_encoding(dna_seq.upper())
+    if is_valid_dna_seq(dna_seq):
+        if encoding_type == 0:
+            qc = amplitude_encoding(dna_seq.upper())
+        elif encoding_type == 1:
+            qc = cosine_encoding(dna_seq.upper())
+    else:
+        st.write('**Invalid DNA sequence! Please check the sequence again.**')
 
 if qc:
 
